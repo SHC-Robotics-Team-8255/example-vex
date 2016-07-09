@@ -3,9 +3,6 @@
 # NOTE: Can be overridden externally.
 #
 
-# for command line arm tools set this here or in an env variable
-#ARM_TOOLS_FOLDER = /usr/local/gcc-arm-none-eabi-5_2-2015q4/bin/
-
 include setup.mk
 
 # Compiler options here.
@@ -152,6 +149,7 @@ INCDIR = $(PORTINC) $(KERNINC) \
 ##############################################################################
 # Compiler settings
 #
+GCCVER=$(gcc --version | awk '/gcc /{print $0;exit 0;}')
 
 MCU  = cortex-m3
 
@@ -216,12 +214,18 @@ DLIBS =
 #
 # local tooling
 #
+# for command line arm tools set this here or in an env variable
+#ARM_TOOLS_FOLDER = /usr/local/gcc-arm-none-eabi-5_2-2015q4/bin/
+USING_GCC_CROSS_COMPILER=yes
 CORTEX_FLASH_FOLDER=/usr/local/bin/
-SERIAL_PORT = /dev/tty.usbmodem1420 
 GIT_SHORT_HASH = $(shell git log -1 --pretty=format:%h)
 
 # List all user C define here, like -D_DEBUG=1
 UDEFS = -DPROJECT=$(PROJECT) -DGIT_SHORT_HASH=$(GIT_SHORT_HASH)
+ifeq ($(USING_GCC_CROSS_COMPILER),yes)
+UDEFS += -DUSING_GCC_CROSS_COMPILER=USING_GCC_CROSS_COMPILER
+endif
+
 
 # Define ASM defines here
 UADEFS =
@@ -248,6 +252,13 @@ endif
 
 include $(CHIBIOS)/os/ports/GCC/ARMCMx/rules.mk
 
+SERIAL_PORT = /dev/tty.usbmodem14170 
+#SERIAL_PORT = /dev/tty.usbmodem14171
+#SERIAL_PORT = /dev/tty.usbmodem14170 
+#SERIAL_PORT = /dev/tty.usbmodem1420
 
 install:
 	$(CORTEX_FLASH_FOLDER)cortexflash -X -w bin/$(PROJECT).hex -g 0x0 $(SERIAL_PORT)
+
+connect:
+	screen $(SERIAL_PORT) 115200

@@ -1,11 +1,11 @@
 # uncomment these if running from default project location
 # Path to ChibiOS
-#CHIBIOS    = ../ChibiOS_2.6.2
+CHIBIOS    = ../ChibiOS
 # Path to convex
-#CONVEX     = ../convex/cortex
+CONVEX     = ../convex-vexilla/cortex
 
 # uncomment to use the optional code like the smart motor library
-#CONVEX_OPT  = yes
+CONVEX_OPT  = yes
 
 # User C code files
 VEXUSERSRC = vexuser.c
@@ -13,3 +13,5 @@ VEXUSERSRC = vexuser.c
 # Uncomment and add/modify user include files
 #VEXUSERINC = myfile.h
 
+ARM_TOOLS_FOLDER=../gcc-arm-none-eabi-5_4-2016q2/bin/
+# trailing slash is required
