@@ -14,5 +14,5 @@ VEXUSERSRC = vexuser.c
 #VEXUSERINC = myfile.h
 
 #ARM_TOOLS_FOLDER=../gcc-arm-none-eabi-5_4-2016q2/bin/
-ARM_TOOLS_FOLDER=/usr/local/gcc-arm-none-eabi-5_3-2016q1/bin/
+ARM_TOOLS_FOLDER=../gcc-arm-none-eabi-5_4-2016q3/bin/
 # trailing slash is required
