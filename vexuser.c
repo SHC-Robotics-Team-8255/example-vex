@@ -138,7 +138,7 @@ vexAutonomous( void *arg )
 msg_t
 vexOperator( void *arg )
 {
-	int16_t		blink = 0;
+  //	int16_t		blink = 0;
 
 	(void)arg;
 
