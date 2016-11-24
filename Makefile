@@ -265,7 +265,7 @@ connect:
 
 fetch:
 	-mkdir bin
-	wget localhost:3000 -O bin/$(PROJECT).hex
+	wget vexilla.herlein.com:3000 -O bin/$(PROJECT).hex
 
 serve:
 	/usr/local/bin/static-vex bin/$(PROJECT).hex
