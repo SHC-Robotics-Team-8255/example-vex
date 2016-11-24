@@ -262,3 +262,10 @@ install:
 
 connect:
 	screen $(SERIAL_PORT) 115200
+
+fetch:
+	-mkdir bin
+	wget localhost:3000 -O bin/$(PROJECT).hex
+
+serve:
+	/usr/local/bin/static-vex bin/$(PROJECT).hex
