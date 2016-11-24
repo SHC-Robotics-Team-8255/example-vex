@@ -162,5 +162,54 @@ make: *** [install] Error 1
 
 You can ignore that "[install] Error 1" - it's not real.
 
+##Shell Commands on the Robot##
 
+You can inspect the robot by connecting to it using the shell (see
+above).
+
+You can see what commands are available by typing 'help' but the command you want to use \
+to inspect the robot is 'info' which will give you a lot of good data:
+
+```
+ch>
+ch>
+ch> info
+Kernel:       2.6.2
+Compiler:     GCC 5.4.1 20160919 (release) [ARM/embedded-5-branch revision 240496]
+Architecture: ARMv7-M
+Core Variant: Cortex-M3
+Port Info:    Advanced kernel mode
+Platform:     STM32F10x Performance Line High Density
+Board:        VEX CORTEX
+ConVEX:       1.0.4
+Build time:   Nov 24 2016 - 20:23:19
+Project:      testvex
+Git Hash:     4fe44de756b66c709344878c0adac0b1cec89600
+```
+
+The parts that will be the most useful are the Build time (when the program was compiled)\
+, the Project (the name you gave it in the Makefile) and the Git hash.
+
+The git hash is very valuable since it can be used to verify that the program running on \
+the robot is the code in your source folder.  You can cross-check like this:  in your cod\
+e directory in a terminal type this:
+
+    git log
+
+You will see something like this:
+
+```
+commit 4fe44de756b66c709344878c0adac0b1cec89600
+Author: Greg Herlein <gherlein@herlein.com>
+Date:   Thu Nov 24 12:22:36 2016 -0800
+
+    fixed git hash
+
+```
+
+You can compare the commit hash (4fe44de756b66c709344878c0adac0b1cec89600) to the hash in\
+ the info command.  If they are the same then you know what code is running.  If they are\
+ not then you either did not load that code into the robot or you forgot to do a git comm\
+it before compiling.  Either way you know you need to fix it.  You are no longer unsure w\
+hat code is running on the robot.
 
