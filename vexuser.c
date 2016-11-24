@@ -149,11 +149,11 @@ vexOperator( void *arg )
 	while(!chThdShouldTerminate())
 		{
 		// flash led/digi out
-		vexDigitalPinSet( kVexDigital_1, (blink++ >> 3) & 1);
+		//vexDigitalPinSet( kVexDigital_1, (blink++ >> 3) & 1);
 
 		// status on LCD of encoder and sonar
-		vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_1, "%4.2fV   %8.1f", vexSpiGetMainBattery() / 1000.0, chTimeNow() / 1000.0 );
-		vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_2, "L %3d R %3d", vexMotorGet( MotorDriveL ), vexMotorGet( MotorDriveR ) );
+		//vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_1, "%4.2fV   %8.1f", vexSpiGetMainBattery() / 1000.0, chTimeNow() / 1000.0 );
+		//vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_2, "L %3d R %3d", vexMotorGet( MotorDriveL ), vexMotorGet( MotorDriveR ) );
 
 		// Tank drive
 		// left drive
