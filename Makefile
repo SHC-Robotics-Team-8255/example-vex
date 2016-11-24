@@ -218,7 +218,7 @@ DLIBS =
 #ARM_TOOLS_FOLDER = /usr/local/gcc-arm-none-eabi-5_2-2015q4/bin/
 USING_GCC_CROSS_COMPILER=yes
 CORTEX_FLASH_FOLDER=/usr/local/bin/
-GIT_SHORT_HASH = $(shell git log -1 --pretty=format:%h)
+GIT_SHORT_HASH = $(shell git log -1 --pretty=format:%H)
 
 # List all user C define here, like -D_DEBUG=1
 UDEFS = -DPROJECT=$(PROJECT) -DGIT_SHORT_HASH=$(GIT_SHORT_HASH)
@@ -252,8 +252,8 @@ endif
 
 include $(CHIBIOS)/os/ports/GCC/ARMCMx/rules.mk
 
-SERIAL_PORT = /dev/ttyACM0
-#SERIAL_PORT = /dev/tty.usbmodem14171
+#SERIAL_PORT = /dev/ttyACM0
+SERIAL_PORT = /dev/tty.usbmodem14161
 #SERIAL_PORT = /dev/tty.usbmodem14170 
 #SERIAL_PORT = /dev/tty.usbmodem1420
 
