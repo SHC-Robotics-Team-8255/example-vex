@@ -257,15 +257,33 @@ SERIAL_PORT = /dev/tty.usbmodem1420
 #SERIAL_PORT = /dev/tty.usbmodem14170 
 #SERIAL_PORT = /dev/tty.usbmodem1420
 
+all:	bin/$(PROJECT).hex
+
 install:
-	$(CORTEX_FLASH_FOLDER)cortexflash -X -w bin/$(PROJECT).hex -g 0x0 $(SERIAL_PORT)
+	$(CORTEX_FLASH_FOLDER)cortexflash -X -w bin/$(PROJECT).hex -g 0x0 $(SERIAL_PORT) || true
+	@echo ""
 
 connect:
 	screen $(SERIAL_PORT) 115200
+	@echo ""
 
 fetch:
 	-mkdir bin
 	wget vexilla.herlein.com:3000 -O bin/$(PROJECT).hex
+	@echo ""
 
 serve:
 	/usr/local/bin/static-vex bin/$(PROJECT).hex
+	@echo ""
+
+detect:
+	@echo "make sure programming cable is unplugged, then press ENTER"
+	@read dummy
+	@ls -al /dev/tty* >a
+	@echo "make sure programming cable is plugged in, then press ENTER"
+	@read dummy
+	@ls -al /dev/tty* >b
+	@diff a b || true
+	@echo "if no output, your device was never plugged in - otherwise, your device is /dev/ttyXYZ which goes in your Makefile"
+	@rm a b
+
