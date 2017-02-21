@@ -134,7 +134,7 @@ vexAutonomous( void *arg )
 //#define DO_SONAR        
 //#define DO_LCD          
 //#define DO_LED          
-
+//#define DO_HUMAN
 /*-----------------------------------------------------------------------------*/
 /** @brief      Driver control                                                 */
 /*-----------------------------------------------------------------------------*/
@@ -144,6 +144,12 @@ vexAutonomous( void *arg )
 msg_t
 vexOperator( void *arg )
 {
+#ifdef DO_LED  
+  int16_t		blink = 0;
+#endif  
+#ifdef DO_HUMAN    
+  int16_t		human=0;
+#endif
 	(void)arg;
 
 	// Must call this
@@ -171,11 +177,26 @@ vexOperator( void *arg )
 	{
 
 #ifdef DO_LED    
-		// flash led/digi out
-    int16_t		blink = 0;
-    vexDigitalPinSet( kVexDigital_1, (blink++ >> 3) & 1);
+//    vex_printf("Blink: %d\r\n",blink%2 );
+    vexDigitalPinSet( kVexDigital_1, blink%2 );
+    blink++;
+		vexSleep( 1000 );
+    vexDigitalPinSet( kVexDigital_1, 0);
+//    vexDigitalPinSet( kVexDigital_2, kVexDigitalLow);
 #endif
-      
+
+#ifdef DO_HUMAN    
+    human=vexDigitalPinGet( kVexDigital_12 );
+    if(human==kVexDigitalHigh)
+    {
+      vex_printf("HUMAN\r\n");
+    } else
+    {
+      vex_printf("\r\n");
+    }
+#endif    
+    
+    
 #ifdef DO_LCD
     vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_1, "%4.2fV   %8.1f", vexSpiGetMainBattery() / 1000.0, chTimeNow() / 1000.0 );
     vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_2, "L %3d R %3d", vexMotorGet( MotorDriveL ), vexMotorGet( MotorDriveR ) );
@@ -197,7 +218,8 @@ vexOperator( void *arg )
 		// left drive
 		vexMotorSet( kVexMotor_3, vexControllerGet( Ch3 ) );
 		// right drive
-		vexMotorSet( kVexMotor_2, vexControllerGet( Ch2 ) );
+//		vexMotorSet( kVexMotor_2, vexControllerGet( Ch2 ) );
+		vexMotorSet( kVexMotor_2, 250 );
 
 		// Don't hog cpu
 		vexSleep( 25 );

@@ -64,7 +64,7 @@ endif
 
 # Define project name here
 ifeq ($(PROJECT),)
-PROJECT  = output
+PROJECT  = example1
 endif
 
 # Path to ChibiOS/RT - default assumes making examples
