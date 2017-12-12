@@ -63,7 +63,7 @@ static  vexDigiCfg  dConfig[kVexDigital_Num] = {
 };
 
 static  vexMotorCfg mConfig[kVexMotorNum] = {
-        { kVexMotor_1,      kVexMotor393T,           kVexMotorNormal,       kVexSensorIME,         kImeChannel_1 },
+        { kVexMotor_1,      kVexMotor393T,           kVexMotorNormal,       kVexSensorIME,         0 },
         { kVexMotor_2,      kVexMotor393T,           kVexMotorNormal,       kVexSensorNone,        0 },
         { kVexMotor_3,      kVexMotor393T,           kVexMotorNormal,       kVexSensorNone,        0 },
         { kVexMotor_4,      kVexMotor393T,		       kVexMotorNormal,       kVexSensorNone,        0 },
@@ -72,7 +72,7 @@ static  vexMotorCfg mConfig[kVexMotorNum] = {
         { kVexMotor_7,      kVexMotor393T,      	   kVexMotorNormal,       kVexSensorNone,        0 },
         { kVexMotor_8,      kVexMotor393T,      	   kVexMotorNormal,       kVexSensorNone,        0 },
         { kVexMotor_9,      kVexMotor393T,           kVexMotorNormal,       kVexSensorIME,         0 },
-        { kVexMotor_10,     kVexMotor393T,           kVexMotorNormal,       kVexSensorIME,         kImeChannel_2 }
+        { kVexMotor_10,     kVexMotor393T,           kVexMotorNormal,       kVexSensorIME,         0 }
 };
 
 
@@ -119,6 +119,9 @@ vexAutonomous( void *arg )
 
   while(1)
   {
+    // this is where you would put code that works in autonomous mode
+
+
     // Don't hog cpu
     vexSleep( 25 );
   }
@@ -129,12 +132,6 @@ vexAutonomous( void *arg )
 #define MotorDriveL     kVexMotor_2
 #define MotorDriveR     kVexMotor_3
 
-// uncomment these to enable them - WARNING: this will make driving unresponsive!
-//#define DO_ENCODER      
-//#define DO_SONAR        
-//#define DO_LCD          
-//#define DO_LED          
-//#define DO_HUMAN
 /*-----------------------------------------------------------------------------*/
 /** @brief      Driver control                                                 */
 /*-----------------------------------------------------------------------------*/
@@ -144,82 +141,22 @@ vexAutonomous( void *arg )
 msg_t
 vexOperator( void *arg )
 {
-#ifdef DO_LED  
-  int16_t		blink = 0;
-#endif  
-#ifdef DO_HUMAN    
-  int16_t		human=0;
-#endif
 	(void)arg;
 
 	// Must call this
 	vexTaskRegister("operator");
 
-#ifdef DO_ENCODER
-  int32_t count;
-    vexEncoderInit();
-    vexEncoderAdd(kVexQuadEncoder_1, kVexDigital_3,kVexDigital_4);
-    vexEncoderStart(kVexQuadEncoder_1);	
-    vexEncoderSet(kVexQuadEncoder_1,5000);
-#endif
-  
-#ifdef DO_SONAR
-    int16_t distance;
-    vexSonarAdd(kVexSonar_1,kVexDigital_5,kVexDigital_6);
-    vexSonarStart(kVexSonar_1);
-    vexSonarRun();
-#endif
-  
 	vex_printf("Starting\r\n");
 
 	// Run until asked to terminate
 	while(!chThdShouldTerminate())
 	{
 
-#ifdef DO_LED    
-//    vex_printf("Blink: %d\r\n",blink%2 );
-    vexDigitalPinSet( kVexDigital_1, blink%2 );
-    blink++;
-		vexSleep( 1000 );
-    vexDigitalPinSet( kVexDigital_1, 0);
-//    vexDigitalPinSet( kVexDigital_2, kVexDigitalLow);
-#endif
-
-#ifdef DO_HUMAN    
-    human=vexDigitalPinGet( kVexDigital_12 );
-    if(human==kVexDigitalHigh)
-    {
-      vex_printf("HUMAN\r\n");
-    } else
-    {
-      vex_printf("\r\n");
-    }
-#endif    
-    
-    
-#ifdef DO_LCD
-    vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_1, "%4.2fV   %8.1f", vexSpiGetMainBattery() / 1000.0, chTimeNow() / 1000.0 );
-    vexLcdPrintf( VEX_LCD_DISPLAY_2, VEX_LCD_LINE_2, "L %3d R %3d", vexMotorGet( MotorDriveL ), vexMotorGet( MotorDriveR ) );
-#endif
-    
-#ifdef DO_ENCODER
-    count=vexEncoderGet(kVexQuadEncoder_1);
-    vex_printf("Count: %d\r\n",count);
-    vexSleep( 500 );
-#endif
-
-#ifdef DO_SONAR
-    distance=vexSonarGetInch(kVexSonar_1);
-    vex_printf("Distance: %d\r\n",distance);
-    vexSleep( 500 );
-#endif
-
 		// Tank drive
 		// left drive
 		vexMotorSet( kVexMotor_3, vexControllerGet( Ch3 ) );
 		// right drive
-//		vexMotorSet( kVexMotor_2, vexControllerGet( Ch2 ) );
-		vexMotorSet( kVexMotor_2, 250 );
+		vexMotorSet( kVexMotor_2, vexControllerGet( Ch2 ) );
 
 		// Don't hog cpu
 		vexSleep( 25 );
