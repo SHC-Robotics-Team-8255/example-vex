@@ -1,9 +1,9 @@
-#Example Program for Vex#
+# Example Program for Vex 
 
 Do not edit and use this program.  Copy it into a new folder and make
 that a new program instead.
 
-##Making Your Own Program##
+## Making Your Own Program 
 
 In the repo directory make a new directory for your code and then copy the example into it as a starting point.  If you wanted your program to be called testvex, you would:
 
@@ -69,13 +69,13 @@ s and you should get a prompt that looks like this:
 
     ch>
 
-##Create a Repository##
+## Create a Repository
 
 Go to github.com and create a repository.  In the terminal in your new
 directory with your edited code follow the instructions on the github
 new repo page to get your code into the repo.
 
-###Remember to make a git ignore file##
+### Remember to make a git ignore file
 
 Copy the file from the example folder... it likely got missed in your
 copy above:
@@ -89,13 +89,13 @@ copy above:
 This will keep the binary files out of your source repo if you forget
 to do a 'make clean' before commiting.
 
-##Editing Code###
+## Editing Code
 
 The only file you need to edit for code is vexuser.c.  You can use any
 editory you like.  Common ones are nano, emacs, sublime, xcode, etc.  Make
 sure you don't use a word processor.  Code files are simple text only.
 
-##Using Git for Source Control##
+## Using Git for Source Control
 
 After you have edited your code you want to make sure you take a
 snapshot of it so that you can undo it if you need to.  This is called
@@ -110,13 +110,13 @@ a commit.  Do this:
 Your code will be saved in the local repo and stored in github.com.
 You now have a backup and a history!
 
-##Compiling##
+## Compiling 
 
 To compile just type:
 
    make
 
-##Installing Code on Robot##
+##Installing Code on Robot
 
 To install:
 
@@ -162,7 +162,7 @@ make: *** [install] Error 1
 
 You can ignore that "[install] Error 1" - it's not real.
 
-##Shell Commands on the Robot##
+## Shell Commands on the Robot
 
 You can inspect the robot by connecting to it using the shell (see
 above).
