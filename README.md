@@ -213,3 +213,92 @@ You can compare the commit hash (4fe44de756b66c709344878c0adac0b1cec89600) to th
 it before compiling.  Either way you know you need to fix it.  You are no longer unsure w\
 hat code is running on the robot.
 
+## Customizing Your Robot's Behavior
+
+The only file you need to modify is vexuser.c - the other files can be
+ignorned for now.  
+
+Let's talk about controlling motors first.  In vexuser.c there are two
+key functions to be modified:  
+
+```
+vexAutonomous() - code for autonomous mode goes here
+vexOperator()   - code for remote control goes here
+```
+
+We'll focus on remote control first.  The example already implements a
+"tank drive" approach.  Let's look at it:
+
+```
+while(!chThdShouldTerminate())
+{
+	// Tank drive
+	// left drive
+	vexMotorSet( kVexMotor_3, vexControllerGet( Ch3  ) );
+	// right drive
+	vexMotorSet( kVexMotor_2, vexControllerGet( Ch2 ) );
+
+	// Don't hog cpu
+	vexSleep( 25 );
+}
+```
+
+vexControllerGet( channel) reads a value from the joystick from -128
+to +128.  That feeds the value to vexMotorSet(motor, value) to set the
+motor speed.  kVexMotor_2 and kVexMotor_3 are the motors plugged into
+motor ports 2 and 3, respectfully. To add more motors controlled by
+the joysticks you would make changes there.  For example, if you
+wanted to make joystick channel 2 drive two additional motors plugged
+into motor ports 4 and 5 the code would look like this:
+
+```
+while(!chThdShouldTerminate())
+{
+    // Tank drive
+    // left drive
+    vexMotorSet( kVexMotor_3, vexControllerGet( Ch3  ) );
+    // right drive
+    vexMotorSet( kVexMotor_2, vexControllerGet( Ch2 ) );
+    vexMotorSet( kVexMotor_4, vexControllerGet( Ch2 ) );
+    vexMotorSet( kVexMotor_5, vexControllerGet( Ch2 ) );
+
+    // Don't hog cpu
+    vexSleep( 25 );
+}
+```
+
+If you want to add a motor plugged into motor port 4 that turns at full power one direction when
+you press a button and the other direction at full power when you
+press a different button, the code would look like this:
+
+```
+while(!chThdShouldTerminate())
+{
+    // Tank drive
+    // left drive
+    vexMotorSet( kVexMotor_3, vexControllerGet( Ch3  ) );
+    // right drive
+    vexMotorSet( kVexMotor_2, vexControllerGet( Ch2 ) );
+
+    if(vexControllerGet( Btn8D ) {
+    	vexMotorSet( kVexMotor_4, 128);   // button 8 down
+    } else if(vexControllerGet( Btn8U ) {
+    	vexMotorSet( kVexMotor_4, -128);  // button 8 up
+    } else
+    	vexMotorSet( kVexMotor_4, 0);     // button 8 not pressed
+    }
+
+    // Don't hog cpu
+    vexSleep( 25 );
+}
+```
+
+Convex-vexilla uses the same names for the buttons as RobotC.  A great
+reference page can be seen [here]
+(http://www.robotc.net/wikiarchive/VEX2_Functions_Remote_Control_-_VEXnet).
+
+
+
+
+
+
