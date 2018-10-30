@@ -218,7 +218,7 @@ DLIBS =
 #ARM_TOOLS_FOLDER = /usr/local/gcc-arm-none-eabi-5_2-2015q4/bin/
 ARM_TOOLS_FOLDER = ../bin/gcc-arm-none-eabi-5_4-2016q3/bin/
 USING_GCC_CROSS_COMPILER=yes
-CORTEX_FLASH_FOLDER=/usr/local/bin/
+CORTEX_FLASH_FOLDER=~/bin/
 GIT_SHORT_HASH = $(shell git log -1 --pretty=format:%H)
 
 # List all user C define here, like -D_DEBUG=1
